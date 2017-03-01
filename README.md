@@ -1,3 +1,3 @@
 401: Applications of Data Analytics
 ===================================
-    - This is just a repo of our class stuff
+This is a collection of assignments for my class.
