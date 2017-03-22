@@ -18,9 +18,19 @@ mov.avg <- function(v,n) {
     out
 }
 
+# Report avgs and errors: the differences between mov.avg-predicted and actual values for each
+# index i
 mov.avg.summary <- function(v,n) {
+    out <- c()
 
+    # use mov.avg to get part one of this bad boy
+    out$avgs <- mov.avg(v,n)
+    out$errors <- v - out$avgs 
+
+    # return this puppy
+    out
 }
+
 
 ##
 ### 2 ###
