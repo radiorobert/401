@@ -46,3 +46,21 @@ ggplot(sal.a,aes(yrs.service,salary)) + geom_point() + geom_smooth(model=lm)
 
 # Plot b with a trendline
 ggplot(sal.b,aes(yrs.service,salary)) + geom_point() + geom_smooth(model=lm)
+
+
+##########################
+# Part 2
+
+# plot NO2 emissions against median value of homes, with a gradient on age of the homes.
+ggplot(boston, aes(medv,nox)) + geom_point(aes(color = boston$age)) + scale_colour_gradient()
+
+
+# Find a model using stepAIC
+m1 <- lm(medv ~ ., data=boston)
+best.fit <- stepAIC(boston.m, direction="both")
+summary(best.fit)
+
+
+# not sure what Im doign here
+m2 <- glm(chas, family=binomial, data=boston)
+m2 <- glm(chas ~ ., family=binomial, data=boston)
