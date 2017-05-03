@@ -1,3 +1,10 @@
+Datasets
+1965-1966 Household Food Consumtion Survey
+1977-1978 Nationwide Food Consumption Survey
+1989-1891 Continuing Survey of Food Intakes by Indivisuals (CSFII)
+1994-1996 CSFII
+2003-2015 NHANES
+
 Useful codes
 0202: food preparation
 - 01: food & drink prep
@@ -17,6 +24,7 @@ Useful codes
     - 01 just eating and drinking
 - 1102 Waiting associated with eating and drinking
 
+_TUCASEID is repeated for each person in the household, because only one is interviewed_
 ### Column Info
 |Column Name|Meaning|File
 |-----------|-------|----|

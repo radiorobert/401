@@ -1,6 +1,7 @@
 
 # Read in that big boy
 atus <- read.csv("datasets/atus/atusact_0315.dat")
+foodaway <- read.csv("datasets/foodaway.csv")
 ncol(atus)
 nrow(atus)
 
@@ -12,8 +13,8 @@ nrow(atus)
 # 99: sum
 foodprep <- atus[atus$TRCODEP %in% c(020201,020202,020203,020299),] 
 eating <- atus[atus$TRCODEP == '110101',]
-buying.food <- atus[atus$TRCODEP == '070103',]
-groceries <- atus[atus$TRCODEP == '070101',]
+buying.food <- atus[atus$TRCODEP == '70103',]
+groceries <- atus[atus$TRCODEP == '70101',]
 
 ######## Build the dataframes
 foodprep <- data.frame(id = foodprep[['TUCASEID']], activity = foodprep[['TRCODEP']], duration = foodprep[['TUACTDUR']])
@@ -94,3 +95,11 @@ results <- data.frame(year = 2003:2015,foodprep =
                   c(mean(buying.food.2015$duration), mean(buying.food.2014$duration), mean(buying.food.2013$duration), mean(buying.food.2012$duration), mean(buying.food.2011$duration), mean(buying.food.2010$duration), mean(buying.food.2009$duration), mean(buying.food.2008$duration), mean(buying.food.2007$duration), mean(buying.food.2006$duration), mean(buying.food.2005$duration), mean(buying.food.2004$duration), mean(buying.food.2003$duration)),
                   groceries =
                   c(mean(groceries.2015$duration), mean(groceries.2014$duration), mean(groceries.2013$duration), mean(groceries.2012$duration), mean(groceries.2011$duration), mean(groceries.2010$duration), mean(groceries.2009$duration), mean(groceries.2008$duration), mean(groceries.2007$duration), mean(groceries.2006$duration), mean(groceries.2005$duration), mean(groceries.2004$duration), mean(groceries.2003$duration)))
+
+
+
+######
+# Make Graphs
+
+# Bar graph for expenditures on eating out
+ggplot(foodaway, aes(year,expenditure.on.food.out)) + geom_col()
