@@ -5,9 +5,9 @@
 # ACT_WORK 30-33
 import sys
 
-for i in range(1, len(sys.argv)):
-    f = open(sys.argv[i],'r')
-    out = open(sys.argv[i][0:sys.argv[i].find('.')] + ".csv", 'a')
+if(sys.argv[2] == "--work"):
+    f = open(sys.argv[1],'r')
+    out = open(sys.argv[1][0:sys.argv[1].find('.')] + ".csv", 'a')
     out.write("SAMPLE,IDENT,RECWGHT,ACT_WORK")
 
     for line in f:
@@ -16,4 +16,19 @@ for i in range(1, len(sys.argv)):
 
     f.close()
     out.close()
+
+if(sys.argv[2] == "--act"):
+    f = open(sys.argv[1],'r')
+    out = open(sys.argv[1][0:sys.argv[1].find('.')] + ".csv", 'a')
+    out.write("CASEID,YEAR,PERNUM,LINENO,PERSONWGHT,ACTIVITY,DURATION\n")
+
+    for line in f:
+        outline = line[0:14] + ',' + line[14:19] + ',' + line[19:21] + ',' + line[21:24] \
+                + ',' + line[24:41] + ',' + line[41:47] + ',' + line[47:]
+        out.write(outline)
+
+    f.close()
+    out.close()
+
+
 
