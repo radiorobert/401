@@ -35,3 +35,17 @@ x8991 <- merge(x8991,rt30.8991[crt30.8991],by='ID')
 x8991 <- merge(x8991,rt50.8991[crt50.8991],by='ID')
 
 x9498 <- merge(rt15.9498[crt15.9498],rt25.9498[crt25.9498],by='HHID')
+x9498$BMI <- x9498$BMI_SP
+
+
+# make a main dataframe
+main <- x8991
+
+main$YEAR[main$YEAR == 1] <- 1989 
+main$YEAR[main$YEAR == 2] <- 1990
+main$YEAR[main$YEAR == 3] <- 1991
+
+bmi.year <- data.frame(rbind(main['BMI'],x9498['BMI']),rbind(main['YEAR'],x9498['YEAR']))
+
+# In the older datasets, if there was no response to BMI the value was set to 999.99
+bmi.year$BMI[bmi.year$BMI == 999.99] <- NA
