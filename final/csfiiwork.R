@@ -1,3 +1,4 @@
+library(plyr)
 # read datasets
 rt15.8991 <- read.csv("datasets/csfii/8991/rt15.csv")
 rt20.8991 <- read.csv("datasets/csfii/8991/rt20.csv")
@@ -9,7 +10,7 @@ rt50.8991 <- read.csv("datasets/csfii/8991/rt50.csv")
 rt15.9498 <- read.csv("datasets/csfii/9498/rt15.csv")
 #rt20.9498 <- read.csv("datasets/csfii/9498/rt20.csv")
 rt25.9498 <- read.csv("datasets/csfii/9498/rt25.csv")
-#rt30.9498 <- read.csv("datasets/csfii/9498/rt30.csv")
+rt30.9498 <- read.csv("datasets/csfii/9498/rt30.csv")
 #rt35.9498 <- read.csv("datasets/csfii/9498/rt35.csv")
 #rt40.9498 <- read.csv("datasets/csfii/9498/rt40.csv")
 #rt50.9498 <- read.csv("datasets/csfii/9498/rt50.csv")
@@ -49,3 +50,24 @@ bmi.year <- data.frame(rbind(main['BMI'],x9498['BMI']),rbind(main['YEAR'],x9498[
 
 # In the older datasets, if there was no response to BMI the value was set to 999.99
 bmi.year$BMI[bmi.year$BMI == 999.99] <- NA
+
+# Put the data together into year averages
+bmi.csfii <- rename(aggregate(bmi.year$BMI, list(bmi.year$YEAR), mean, na.rm=TRUE),
+                  c("Group.1" = "YEAR", "x" = "avg.bmi"))
+
+############# get the meals at home stats
+tmp <- rt30.9498[rt30.9498$EATHOME == 1 | rt30.9498$EVERHOME == 1,]
+c.meals <- tmp$YEAR
+c.meals <- count(c.meals)
+
+totals.per.year <- c(nrow(rt30.9498[rt30.9498$YEAR == 1994,]))
+totals.per.year <- c(totals.per.year,nrow(rt30.9498[rt30.9498$YEAR == 1995,]))
+totals.per.year <- c(totals.per.year,nrow(rt30.9498[rt30.9498$YEAR == 1996,]))
+totals.per.year <- c(totals.per.year,nrow(rt30.9498[rt30.9498$YEAR == 1998,]))
+
+c.meals$freq <- c.meals['freq'] / totals.per.year
+
+c.meals <- do.call(data.frame, c.meals)
+c.meals <- rename(c.meals, c("x"="YEAR", "freq"="home.meals"))
+all.meals <- rbind(c.meals, hmeals.hanes)
+
